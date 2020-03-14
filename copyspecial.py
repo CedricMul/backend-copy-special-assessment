@@ -25,38 +25,38 @@ __author__ = "Cedric Mulvihill"
 # Write functions and modify main() to call them
 
 def get_special_paths(dir):
-    dirList = os.listdir(dir)
-    specialList = []
-    literalSpecial = re.compile(r'__[a-zA-Z0-9]+[-_]*[a-zA-Z0-9]*__')
-    for i in dirList:
-        if literalSpecial.search(i):
-            p = os.path.abspath(i)
-            specialList.append(p)
-    return specialList
+    ditectory_list = os.listdir(dir)
+    special_list = []
+    literal_special = re.compile(r'__[a-zA-Z0-9]+[-_]*[a-zA-Z0-9]*__')
+    for i in ditectory_list:
+        if literal_special.search(i):
+            path = os.path.abspath(i)
+            special_list.append(path)
+    return special_list
 
 
 def copy_to(paths, dir):
     if '/' in dir:
-        dirList = dir.split('/')
-        dirList.pop()
-        if len(dirList) > 1:
-            dirPath = dirList.join('/')
+        split_directory = dir.split('/')
+        split_directory.pop()
+        if len(split_directory) > 1:
+            directory_path = split_directory.join('/')
         else:
-            dirPath = dirList[0]
+            directory_path = split_directory[0]
     else:
-        dirPath = dir
+        directory_path = dir
     
-    if not os.path.isdir(dirPath):
-        os.makedirs(dirPath)
+    if not os.path.isdir(directory_path):
+        os.makedirs(directory_path)
     for a in paths:
         shutil.copy(a, dir)
 
 def zip_to(paths, zippath):
-    cString = 'zip -j zipfile'
+    command_string = 'zip -j zipfile'
     for p in paths:
-        cString += ' ' + p
-    print("Executing command: " + cString)
-    os.system(cString)
+        command_string += ' ' + p
+    print("Executing command: " + command_string)
+    os.system(command_string)
 
 
 def main():
@@ -77,18 +77,18 @@ def main():
         for i in x:
             print(i)
     else:
-        fromPaths = get_special_paths(args.from_dir)
+        from_paths = get_special_paths(args.from_dir)
         if args.todir:
-            copy_to(fromPaths, args.todir)
+            copy_to(from_paths, args.todir)
         elif args.tozip:
-            zip_to(fromPaths, args.tozip)
+            zip_to(from_paths, args.tozip)
         else:
             parser.print_usage()
 
 
 
 
-    # TODO you must write your own code to get the cmdline args.
+    
     # Read the docs and examples for the argparse module about how to do this.
 
     # Parsing command line arguments is a must-have skill.
